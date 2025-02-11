@@ -1,16 +1,26 @@
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-        vector<int> charIndex(256, -1);
-        int maxLength = 0; 
-        int start = 0;
-        for (int end = 0; end < s.size(); end++) {
-            if (charIndex[s[end]] >= start) {
-                start = charIndex[s[end]] + 1;
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode dummy(0);
+        ListNode* current = &dummy;
+
+        while (list1 != nullptr && list2 != nullptr) {
+            if (list1->val <= list2->val) {
+                current->next = list1;
+                list1 = list1->next;
+            } else {
+                current->next = list2;
+                list2 = list2->next;
             }
-            charIndex[s[end]] = end;
-            maxLength = max(maxLength, end - start + 1);
+            current = current->next;
         }
-        return maxLength;
+
+        if (list1 != nullptr) {
+            current->next = list1;
+        } else {
+            current->next = list2;
+        }
+
+        return dummy.next;
     }
 };
